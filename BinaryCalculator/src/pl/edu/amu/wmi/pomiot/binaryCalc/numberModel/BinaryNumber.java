@@ -16,91 +16,112 @@ public class BinaryNumber {
 	
 	private String signBit = null;
 	private String exponentBits = null;
-	private String fractionBits = null;
+	private String significandBits = null;
 	
 	public BinaryNumber(double number){
 		
 		System.out.println("Entered number equals: "+number);
 		buildStringRepresentation(number);
-		System.out.println(stringRepresentation);
+		//System.out.println(stringRepresentation);
 	}
 	
 	private void buildStringRepresentation(double number){
 		
-		StringBuilder result = new StringBuilder("");
-		
 		//ustawiamy znak liczby
-		if (number < 0){
-			this.signBit = "1";
-			number = Math.abs(number);
-			}
-		else this.signBit = "0";
-		
-		//mielimy liczbê zeby wydobyæ wyk³adnik i mantysê
-		String numberAsBinaryString = normalize(Converter.posDoubleToString(number));
-		
-		this.stringRepresentation = numberAsBinaryString.toString();
-	}
-	
-	private String normalize(String representation){
-		
-		
-		//dostajemy gówno z kropk¹, trzeba to skatowaæ
-		StringBuilder result = new StringBuilder("");
-		
-		//wydobywamy wyk³adnik
-		int difference = (representation.indexOf('.')-representation.indexOf('1'));
-		System.out.println("Difference is: "+difference);
-		this.exponentBits = Converter.getExponentBits(difference);
+		this.signBit = getSignBit(number);
+		number = Math.abs(number);
+
+		String posDoubleAsString = Converter.posDoubleToString(number);
+
+		this.exponentBits = getExponentBits(posDoubleAsString);
 		System.out.println("Exponent bits: "+exponentBits);
-		
-		
-		//teraz trzeba wydobyæ mantysê
-		System.out.println("Aktualnie gówno wygl¹da tak: "+representation);
-		
-		int startOfThings = representation.indexOf('1');
-		fractionBits = representation.substring(startOfThings, startOfThings+10);
-		System.out.println("Fraction bits: "+fractionBits);
-		
-		
-		
-		
-		/*
-		if(difference>0){
-		result.append(representation.substring(representation.indexOf('1')));
-		}
-		else{
-			result.append(representation.substring(representation.indexOf('.')+1));
-		}
-		
-		result.deleteCharAt(result.indexOf("."));
-		this.fractionBits = result.substring(0, 9);*/
-		
-		return result.toString(); 
+
+		this.significandBits = getSignificadBits(posDoubleAsString);
+		System.out.println("Significand bits: "+significandBits);
+
 	}
-	
+
+	private String getSignBit(double number){
+		if (number>=0) return "0";
+		else return "1";
+	}
+
+	private String getExponentBits(String numberBin){
+
+		String exponentBits = "";
+
+		String[] parts = numberBin.split("\\.");
+
+		String integerPart = parts[0];
+		String fractionPart = parts[1];
+
+		String integerPartWithoutPrecedingZeroes = (new Integer(Integer.parseInt(integerPart))).toString();
+
+		StringBuilder helper = new StringBuilder(fractionPart);
+		helper.reverse();
+		helper = new StringBuilder((new Integer(Integer.parseInt(helper.toString()))).toString());
+		String fractionPartWithoutFollowingZeroes = (helper.reverse()).toString();
+
+
+		if(integerPartWithoutPrecedingZeroes.length()>1){
+
+			// number is greater or equal 2
+
+			exponentBits = Converter.intToBinary((integerPartWithoutPrecedingZeroes.length() - 1) + 15);
+			exponentBits = exponentBits.substring(exponentBits.length()-5);
+		}
+		else if(integerPartWithoutPrecedingZeroes.equals("1")){
+
+			// number is greater or equal 1 but lesser than 2
+
+			exponentBits = Converter.intToBinary(15);
+			exponentBits = exponentBits.substring(exponentBits.length()-5);
+		}
+		else {
+
+			// number is lesser than 1
+
+			int firstOccurenceOfOne = fractionPartWithoutFollowingZeroes.indexOf("1");
+
+			exponentBits = Converter.intToBinary(15 - 1 - firstOccurenceOfOne);
+			exponentBits = exponentBits.substring(exponentBits.length() - 5);
+		}
+		return exponentBits;
+	}
+
+	private String getSignificadBits(String numberBin){
+
+		String significandBits = "";
+
+		String[] parts = numberBin.split("\\.");
+
+		String integerPart = parts[0];
+		String fractionPart = parts[1];
+
+		String integerPartWithoutPrecedingZeroes = (new Integer(Integer.parseInt(integerPart))).toString();
+
+		StringBuilder helper = new StringBuilder(fractionPart);
+		helper.reverse();
+		helper = new StringBuilder((new Integer(Integer.parseInt(helper.toString()))).toString());
+		String fractionPartWithoutFollowingZeroes = (helper.reverse()).toString();
+
+		StringBuilder significand = new StringBuilder(integerPartWithoutPrecedingZeroes+fractionPartWithoutFollowingZeroes);
+
+
+		int firstOccurenceOfOne = significand.indexOf("1");
+
+		if(firstOccurenceOfOne<0){
+			firstOccurenceOfOne = 0;
+		}
+
+		significand.append("0000000000");
+		significandBits = significand.substring(firstOccurenceOfOne+1,firstOccurenceOfOne+11);
+
+		return significandBits;
+	}
+
 	public String toString(){
-		return signBit+" "+exponentBits+" "+fractionBits;
-	}
 
-	public String getStringRepresentation(){
-		return stringRepresentation;
+		return signBit+" "+exponentBits+" "+significandBits;
 	}
-
-	public String getSignBit(){
-		return this.signBit;
-	}
-	
-	public String getExponentBits(){
-		return this.exponentBits;
-	}
-	
-	public String getFractionBits(){
-		return this.fractionBits;
-	}
-
-	public double getAsDouble(){
-		return Converter.convertBinaryNumberToDouble(this);
-	}
-
 }

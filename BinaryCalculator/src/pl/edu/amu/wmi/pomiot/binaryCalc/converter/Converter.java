@@ -4,14 +4,36 @@ import pl.edu.amu.wmi.pomiot.binaryCalc.numberModel.BinaryNumber;
 
 public class Converter {
 
-	public static String posIntToBinary(int number){
+	public static String posDoubleToString(double number){
 
 		StringBuilder result = new StringBuilder("");
 
-		for(int i=19;i>=0;i--){
-			if(number - Math.pow(2, i) >= 0){
+		double integer =Math.floor(number);
+		double fraction=number%1.0;
+
+		System.out.println("Iteger part: "+integer+" Fraction part:"+fraction);
+		System.out.println("Attempting to convert to string.");
+		System.out.println();
+
+		String integerAsString = intToBinary((int)integer);
+		String fractionAsString = fractionToBinary(fraction);
+
+		System.out.println("Integer part as binary: "+integerAsString+" Fraction part as binary:"+fractionAsString);
+
+		result.append(integerAsString+"."+fractionAsString);
+
+		return result.toString();
+	}
+
+	public static String intToBinary(int number){
+
+		double workingNumber = number;
+		StringBuilder result = new StringBuilder("");
+
+		for(int i=20;i>=0;i--){
+			if(workingNumber - Math.pow(2, i) >= 0){
 				result.append("1");
-				number = (int) (number - Math.pow(2, i));
+				workingNumber = (int) (workingNumber - Math.pow(2, i));
 			}
 			else{
 				result.append("0");
@@ -21,18 +43,33 @@ public class Converter {
 		return result.toString();
 	}
 
-	public static String posDoubleToString(double number){
+	public static String fractionToBinary(double number){
 
-		int tempNumb = (int)Math.floor(number*Math.pow(2, 10));
-		String multipliedValueString = posIntToBinary(tempNumb);
+		double workingNumber = number;
+		StringBuilder result = new StringBuilder();
 
-		int stringLength = multipliedValueString.length();
-		StringBuilder result = new StringBuilder("");
-		result.append(multipliedValueString.substring(0,stringLength-10)).append(".").append(multipliedValueString.substring(stringLength-10));
+		for(int i=1;i<=20;i++){
+			if(workingNumber - Math.pow((0.5), i) >= 0){
+				result.append("1");
+				workingNumber = (double) (workingNumber - Math.pow(2, i));
+			}
+			else{
+				result.append("0");
+			}
+		}
 
 		return result.toString();
 	}
 
+	public static double binaryStringToDouble(String numberRepresentation){
+
+		return 0;
+	}
+
+
+
+
+/*
 	public static double posStringToFraction(String binary){
 
 		double result = 0;
@@ -47,11 +84,9 @@ public class Converter {
 		return result;
 	}
 
-
-
 	public static int posBinaryToInt(String binary){
 		
-		System.out.println("Pracujê na nastêpuj¹cym stringu: " + binary);
+		System.out.println("Pracuje na nastepujacym stringu: " + binary);
 
 		int result = 0;
 
@@ -70,19 +105,24 @@ public class Converter {
 		return posIntToBinary(15+exponent).substring(15);
 	}
 
-	public static double convertBinaryNumberToDouble(BinaryNumber number){
+	public static double convertHalfPrecNumberToDouble(BinaryNumber number){
 
 		double sign = 1;
-		double exponent = 0;
-		double fraction = 0;
+		int exponent = posBinaryToInt(number.getExponentBits())-15;
+		double result = 0;
 
 		if(number.getSignBit().equals("1")){
 			sign=(-1);
 		}
-		exponent = posBinaryToInt(number.getExponentBits());
-		fraction = posStringToFraction(number.getFractionBits());
-		System.out.println("Exponent in decimal equals: "+exponent+"\nFraction in decimal equals: "+fraction);
 
-		return sign*(Math.pow(2, exponent-15)*fraction);
+		if(exponent<0) {
+			String temp ="";
+			for(int i=exponent;i<0;i++){
+				temp = temp + "0";
+			}
+			result = posStringToFraction(number.getFractionBits());
+		}
+		return sign*result;
 	}
+	*/
 }

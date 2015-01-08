@@ -6,8 +6,8 @@ public class BinaryCalculator {
 	
 	public static void main(String[] args){
 		
-		BinaryNumber numb = new BinaryNumber(4.5);
+		BinaryNumber numb = new BinaryNumber(1.5);
 		
-		System.out.println("Entered after conversions equals: "+numb.getAsDouble());
+		System.out.println("Entered after conversions equals: "+numb);
 	}
 }

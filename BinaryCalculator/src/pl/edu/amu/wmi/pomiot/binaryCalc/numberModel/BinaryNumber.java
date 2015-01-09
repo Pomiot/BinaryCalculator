@@ -26,12 +26,14 @@ public class BinaryNumber {
 	}
 	
 	private void buildStringRepresentation(double number){
-		
-		//ustawiamy znak liczby
-		this.signBit = getSignBit(number);
-		number = Math.abs(number);
 
-		String posDoubleAsString = Converter.posDoubleToString(number);
+		double workingNumber = number;
+
+		//ustawiamy znak liczby
+		this.signBit = getSignBit(workingNumber);
+		workingNumber = Math.abs(workingNumber);
+
+		String posDoubleAsString = Converter.posDoubleToString(workingNumber);
 
 		this.exponentBits = getExponentBits(posDoubleAsString);
 		System.out.println("Exponent bits: "+exponentBits);
@@ -55,12 +57,10 @@ public class BinaryNumber {
 		String integerPart = parts[0];
 		String fractionPart = parts[1];
 
-		String integerPartWithoutPrecedingZeroes = (new Integer(Integer.parseInt(integerPart))).toString();
 
+		String integerPartWithoutPrecedingZeroes = (new Integer(Integer.parseInt(integerPart))).toString();
 		StringBuilder helper = new StringBuilder(fractionPart);
-		helper.reverse();
-		helper = new StringBuilder((new Integer(Integer.parseInt(helper.toString()))).toString());
-		String fractionPartWithoutFollowingZeroes = (helper.reverse()).toString();
+		String fractionPartWithoutFollowingZeroes = helper.substring(0,20);
 
 
 		if(integerPartWithoutPrecedingZeroes.length()>1){
@@ -101,9 +101,12 @@ public class BinaryNumber {
 		String integerPartWithoutPrecedingZeroes = (new Integer(Integer.parseInt(integerPart))).toString();
 
 		StringBuilder helper = new StringBuilder(fractionPart);
-		helper.reverse();
-		helper = new StringBuilder((new Integer(Integer.parseInt(helper.toString()))).toString());
-		String fractionPartWithoutFollowingZeroes = (helper.reverse()).toString();
+
+		//helper.reverse();
+
+		//helper = new StringBuilder((new Integer(Integer.parseInt(helper.toString()))).toString());
+
+		String fractionPartWithoutFollowingZeroes = helper.toString().substring(0,10); //(helper.reverse()).toString();
 
 		StringBuilder significand = new StringBuilder(integerPartWithoutPrecedingZeroes+fractionPartWithoutFollowingZeroes);
 

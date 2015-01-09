@@ -112,45 +112,45 @@ public class Operations {
         char[] secondCalculationArray = secondNumber.toCharArray();
         StringBuilder resultCalculationArray = new StringBuilder("");
 
-        int przesuniecie = 0;
+        int carryBit = 0;
 
-        int jajebie1 =0;
-        int jajebie2 =0;
+        int bitAtNumberOne =0;
+        int bitAtNumberTwo =0;
 
         for(int i = firstCalculationArray.length-2; i>=0; i--){
 
-            if(firstNumber.charAt(i)=='1'){jajebie1=1;}
-            else{jajebie1=0;}
+            if(firstNumber.charAt(i)=='1'){bitAtNumberOne=1;}
+            else{bitAtNumberOne=0;}
 
-            if(secondNumber.charAt(i)=='1'){jajebie2=1;}
-            else{jajebie2=0;}
+            if(secondNumber.charAt(i)=='1'){bitAtNumberTwo=1;}
+            else{bitAtNumberTwo=0;}
 
             int current = 0;
-            current = jajebie1+jajebie2+przesuniecie;
+            current = bitAtNumberOne+bitAtNumberTwo+carryBit;
 
             switch(current) {
                 case 0:
                     resultCalculationArray.append("0");
-                    przesuniecie=0;
+                    carryBit=0;
                     break;
 
                 case 1:
                     resultCalculationArray.append("1");
-                    przesuniecie=0;
+                    carryBit=0;
                     break;
 
                 case 2:
                     resultCalculationArray.append("0");
-                    przesuniecie=1;
+                    carryBit=1;
                     break;
 
                 case 3:
                     resultCalculationArray.append("1");
-                    przesuniecie=1;
+                    carryBit=1;
                     break;
 
                 default:
-                    resultCalculationArray.append("NOSZKURWA");
+                    resultCalculationArray.append("-WRONG-");
                     break;
 
             }

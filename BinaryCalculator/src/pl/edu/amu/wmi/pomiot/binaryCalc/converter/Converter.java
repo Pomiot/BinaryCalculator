@@ -92,7 +92,7 @@ public class Converter {
 	public static double binaryStringToDouble(String numberRepresentation){
 
 		System.out.println();
-		System.out.println("-----------\n Adding numbers\n-----------");
+		System.out.println("-----------\n Binary string to double\n-----------");
 
 		double result = 0;
 
@@ -132,8 +132,7 @@ public class Converter {
 	}
 
 	public static int posBinaryToInt(String binary){
-		
-		System.out.println("Pracuje na nastepujacym stringu: " + binary);
+
 
 		int result = 0;
 

@@ -4,13 +4,13 @@ import pl.edu.amu.wmi.pomiot.binaryCalc.converter.Converter;
 
 public class BinaryNumber {
 
-	/*
+	/**
 	 * String representation of this particular binary number model is:
 	 * 
 	 * 1 bit for sign
 	 * 5 bits for exponent
 	 * 10 bits for significand
-	 */
+	 **/
 
 	String stringRepresentation = null;
 	

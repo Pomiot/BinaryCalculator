@@ -10,15 +10,15 @@ public class Converter {
 
 		double integer =Math.floor(number);
 		double fraction=number%1.0;
-
+		/*
 		System.out.println("Iteger part: "+integer+" Fraction part:"+fraction);
 		System.out.println("Attempting to convert to string.");
 		System.out.println();
-
+		*/
 		String integerAsString = intToBinary((int)integer);
 		String fractionAsString = fractionToBinary(fraction);
 
-		System.out.println("Integer part as binary: "+integerAsString+" Fraction part as binary:"+fractionAsString);
+		//.out.println("Integer part as binary: "+integerAsString+" Fraction part as binary:"+fractionAsString);
 
 		result.append(integerAsString+"."+fractionAsString);
 
@@ -91,8 +91,10 @@ public class Converter {
 
 	public static double binaryStringToDouble(String numberRepresentation){
 
+		/*
 		System.out.println();
 		System.out.println("-----------\n Binary string to double\n-----------");
+		*/
 
 		double result = 0;
 
@@ -101,13 +103,13 @@ public class Converter {
 
 		int sign = 1;
 		if(numberRepresentationParts[0].equals("1")) sign = -1;
-		System.out.println("Sign is: " + sign);
+		//System.out.println("Sign is: " + sign);
 
 		int exponent = Converter.posBinaryToInt(numberRepresentationParts[1])-15;
-		System.out.println("Exponent is: " + exponent);
+		//System.out.println("Exponent is: " + exponent);
 
 		StringBuilder significandInProgress = new StringBuilder("1"+numberRepresentationParts[2]);
-		System.out.println("Significand before calculation is: " + significandInProgress);
+		//System.out.println("Significand before calculation is: " + significandInProgress);
 
 		if(exponent<0){
 			significandInProgress.insert(0,"0.");
@@ -118,16 +120,16 @@ public class Converter {
 		else {
 			significandInProgress.insert(exponent + 1, ".");
 		}
-		System.out.println("Significand after dot insertion is: " + significandInProgress);
+		//System.out.println("Significand after dot insertion is: " + significandInProgress);
 
 		String[] integerAndFractionParts = significandInProgress.toString().split("\\.");
 
-		System.out.println("Fraction part is: "+integerAndFractionParts[1]);
+		//System.out.println("Fraction part is: "+integerAndFractionParts[1]);
 		double fractionPart = binaryToFraction(integerAndFractionParts[1]);
 		int integerPart = binaryToInt(integerAndFractionParts[0]);
 
 		result = sign*(integerPart+fractionPart);
-		System.out.println("Number after conversion is: "+result);
+		//System.out.println("Number after conversion is: "+result);
 		return result;
 	}
 

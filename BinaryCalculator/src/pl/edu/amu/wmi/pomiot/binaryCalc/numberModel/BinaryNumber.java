@@ -18,11 +18,11 @@ public class BinaryNumber {
 	private String exponentBits = null;
 	private String significandBits = null;
 	
-	public BinaryNumber(double number){
-		
-		System.out.println("Entered number equals: "+number);
+	public BinaryNumber(double number) {
+
+		//System.out.println();
+		//System.out.println("Entered number equals: " + number);
 		buildStringRepresentation(number);
-		//System.out.println(stringRepresentation);
 	}
 	
 	private void buildStringRepresentation(double number){
@@ -36,10 +36,10 @@ public class BinaryNumber {
 		String posDoubleAsString = Converter.posDoubleToString(workingNumber);
 
 		this.exponentBits = getExponentBits(posDoubleAsString);
-		System.out.println("Exponent bits: "+exponentBits);
+		//System.out.println("Exponent bits: "+exponentBits);
 
 		this.significandBits = getSignificadBits(posDoubleAsString);
-		System.out.println("Significand bits: "+significandBits);
+		//System.out.println("Significand bits: "+significandBits);
 
 	}
 

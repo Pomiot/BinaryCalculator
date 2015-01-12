@@ -15,12 +15,6 @@ public class BinaryCalculator {
 
 	public static void main(String[] args) throws IOException {
 
-		BinaryNumber numb1 = new BinaryNumber(24.47);
-		BinaryNumber numb2 = new BinaryNumber(100.17);
-
-		double operationResult = Operations.addition(numb1.toString(), numb2.toString());
-		System.out.println("Wynik: "+operationResult );
-
 		System.out.println("****************************");
 		System.out.println("Binarny kalkulator");
 
@@ -32,7 +26,7 @@ public class BinaryCalculator {
 
 			System.out.println("1. Dodawanie");
 			System.out.println("2. Odejmowanie");
-			System.out.println("3. Mnożenie [TODO]");
+			System.out.println("3. Mnożenie");
 
 			int choice = Integer.parseInt(reader.readLine());
 			switch (choice) {
@@ -42,6 +36,10 @@ public class BinaryCalculator {
 				}
 				case 2: {
 					subUI();
+					break;
+				}
+				case 3: {
+					mulUI();
 					break;
 				}
 				default: {
@@ -64,6 +62,8 @@ public class BinaryCalculator {
 		BinaryNumber numb1 = new BinaryNumber(numberOne);
 		BinaryNumber numb2 = new BinaryNumber(numberTwo);
 		double result = Operations.substraction(numb1.toString(), numb2.toString());
+
+		System.out.println("Wynikiem odejmowania jest: "+result);
 	}
 
 	private static void addUI() throws IOException {
@@ -77,6 +77,8 @@ public class BinaryCalculator {
 		BinaryNumber numb1 = new BinaryNumber(numberOne);
 		BinaryNumber numb2 = new BinaryNumber(numberTwo);
 		double result = Operations.addition(numb1.toString(), numb2.toString());
+
+		System.out.println("Wynikiem dodawania jest: "+result);
 	}
 
 	private static void mulUI() throws IOException {
@@ -87,9 +89,15 @@ public class BinaryCalculator {
 		System.out.println("Podaj druga liczbe: ");
 		double numberTwo = Double.parseDouble(reader.readLine());
 
-		BinaryNumber numb1 = new BinaryNumber(numberOne);
-		BinaryNumber numb2 = new BinaryNumber(numberTwo);
+		double sign = -1;
+		if((numberOne>0 && numberTwo>0)||(numberOne<0 && numberTwo<0)){
+			sign = 1;
+		}
+
+		BinaryNumber numb1 = new BinaryNumber(Math.abs(numberOne));
+		BinaryNumber numb2 = new BinaryNumber(Math.abs(numberTwo));
 		double result = Operations.multiplication(numb1.toString(), numb2.toString());
 
+		System.out.println("Wynikiem mnożenia jest: "+(result*sign));
 	}
 }

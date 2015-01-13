@@ -227,8 +227,8 @@ public class Operations {
             secondSignificandForCalculation = convertToNegative(secondSignificandForCalculation);
         }
 
-        System.out.println("First element after preparation to substraction:  " + firstSignificandForCalculation);
-        System.out.println("Second element after preparation to substraction: " + secondSignificandForCalculation);
+        //System.out.println("First element after preparation to substraction:  " + firstSignificandForCalculation);
+        //System.out.println("Second element after preparation to substraction: " + secondSignificandForCalculation);
 
         String result = substract(firstSignificandForCalculation, secondSignificandForCalculation);
 
@@ -236,7 +236,7 @@ public class Operations {
 
         if(result.charAt(0)=='1') {
             result = convertToNegative(result);
-            System.out.println("After negation: " + result);
+            //System.out.println("After negation: " + result);
         }
 
         int biggerExponent = Math.max(firstExponent, secondExponent);
@@ -297,9 +297,9 @@ public class Operations {
             }
         }
 
-        System.out.println("\nThe result of substraction is: ");
+        //System.out.println("\nThe result of substraction is: ");
         resultCalculationArray.reverse();
-        System.out.println(resultCalculationArray);
+       // System.out.println(resultCalculationArray);
 
         return resultCalculationArray.toString();
     }

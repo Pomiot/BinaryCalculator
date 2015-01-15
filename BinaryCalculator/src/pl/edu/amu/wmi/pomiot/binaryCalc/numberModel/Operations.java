@@ -304,15 +304,30 @@ public class Operations {
         return resultCalculationArray.toString();
     }
 
-    private static Double supportingConversion(String resultCalculationArray, int exponent) {
+    private static Double supportingConversion(String resultCalculationArray, int biggerExponent) {
 
         double sign = 1;
         if(resultCalculationArray.charAt(0)=='1'){
             sign=-1;
         }
 
-        StringBuilder res = new StringBuilder(resultCalculationArray.substring(1));
-        res.insert(exponent+2-15,".");
+        int exponent = biggerExponent+2-15;
+        StringBuilder res = null;
+
+
+        if(exponent>=0){
+            res = new StringBuilder(resultCalculationArray.substring(1));
+            res.insert(exponent,".");
+        }
+        else{
+            res = new StringBuilder(resultCalculationArray.substring(1));
+            for(int i = exponent; i<0;i++){
+                res.insert(0,"0");
+            }
+            res.insert(0,".");
+            res.insert(0,"0");
+        }
+
 
         String[] numberParts = res.toString().split("\\.");
 
@@ -415,8 +430,22 @@ public class Operations {
             sign=-1;
         }
 
-        StringBuilder res = new StringBuilder(resultCalculationArray.substring(1));
-        res.insert(((biggerExponent-15)*2)+3,".");
+        int exponent = ((biggerExponent-15)*2)+3;
+        StringBuilder res = null;
+
+
+        if(exponent>=0){
+            res = new StringBuilder(resultCalculationArray.substring(1));
+            res.insert(exponent,".");
+        }
+        else{
+            res = new StringBuilder(resultCalculationArray.substring(1));
+            for(int i = exponent; i<0;i++){
+                res.insert(0,"0");
+            }
+            res.insert(0,".");
+            res.insert(0,"0");
+        }
 
         String[] numberParts = res.toString().split("\\.");
 
